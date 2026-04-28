@@ -1,9 +1,14 @@
 import axios from "axios";
+import { mockAdapter } from "./mockApi";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL || "/api",
   timeout: 15000,
 });
+
+if (!import.meta.env.VITE_API_URL) {
+  api.defaults.adapter = mockAdapter;
+}
 
 // Attach JWT token to every request
 api.interceptors.request.use((config) => {
